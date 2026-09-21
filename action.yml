@@ -5,6 +5,8 @@ inputs:
   maven-version:
     description: 'Version Spec of the version to use.  Examples: 10.x, 10.15.1, >=10.15.0'
     default: '3.8.2'
+  mirror:
+    description: 'Hostname of a Maven Central mirror to use for downloading Maven'
 runs:
   using: 'node24'
   main: 'lib/setup-maven.js'
