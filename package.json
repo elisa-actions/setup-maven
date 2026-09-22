@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "setup maven action",
-  "main": "lib/setup-maven.js",
+  "main": "dist/index.js",
   "scripts": {
-    "build": "tsc",
+    "build": "rollup -c",
     "format": "prettier --write **/*.ts",
     "format-check": "prettier --check **/*.ts"
   },
@@ -17,25 +17,29 @@
   "author": "stCarolas",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^2.0.3",
-    "@actions/github": "^8.0.1",
-    "@actions/io": "^2.0.0",
-    "@actions/tool-cache": "3.0.1",
+    "@actions/core": "^3.0.1",
+    "@actions/github": "^9.1.1",
+    "@actions/io": "^3.0.2",
+    "@actions/tool-cache": "4.0.0",
     "semver": "^6.3.1",
     "typed-rest-client": "^3.1.2"
   },
   "devDependencies": {
+    "@rollup/plugin-commonjs": "^29.0.3",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "@rollup/plugin-typescript": "^12.3.0",
     "@types/node": "^24.11.6",
     "@types/semver": "^6.0.0",
     "husky": "^2.3.0",
     "prettier": "^1.17.1",
+    "rollup": "^4.63.4",
+    "tslib": "^2.8.1",
     "typescript": "^5.3.3"
   },
   "husky": {
     "skipCI": true,
     "hooks": {
-      "pre-commit": "npm run build && npm run format",
-      "post-commit": "npm prune --production && git add node_modules/* && git commit -m \"Husky commit correct node modules\""
+      "pre-commit": "npm run build && npm run format"
     }
   }
 }
