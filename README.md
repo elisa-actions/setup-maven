@@ -11,3 +11,5 @@ Add this step into workflow
 ```
 
 The optional `mirror` input takes precedence over the `MAVEN_CENTRAL_MIRROR` environment variable. If neither is set, Maven is downloaded from `repo.maven.apache.org`.
+
+A continuation of stCarolas/setup-maven

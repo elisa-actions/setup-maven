@@ -1,8 +1,8 @@
 // Load tempDirectory before it gets wiped by tool-cache
 let tempDirectory = process.env['RUNNER_TEMPDIRECTORY'] || '';
 
-import * as core from '@actions/core';
-import * as tc from '@actions/tool-cache';
+import {addPath} from '@actions/core';
+import {cacheDir, downloadTool, extractTar, find} from '@actions/tool-cache';
 import * as crypto from 'crypto';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -23,14 +23,14 @@ if (!tempDirectory) {
 
 export async function getMaven(version: string, mirror?: string) {
   let toolPath: string;
-  toolPath = tc.find('maven', version);
+  toolPath = find('maven', version);
 
   if (!toolPath) {
     toolPath = await downloadMaven(version, mirror);
   }
 
   toolPath = path.join(toolPath, 'bin');
-  core.addPath(toolPath);
+  addPath(toolPath);
 }
 
 async function downloadMaven(
@@ -44,8 +44,8 @@ async function downloadMaven(
   console.log(`downloading ${downloadUrl}`);
 
   try {
-    const downloadPath = await tc.downloadTool(downloadUrl);
-    const checksumPath = await tc.downloadTool(`${downloadUrl}.sha1`);
+    const downloadPath = await downloadTool(downloadUrl);
+    const checksumPath = await downloadTool(`${downloadUrl}.sha1`);
     const expectedChecksum = (
       await fs.promises.readFile(checksumPath, 'utf8')
     ).trim();
@@ -60,9 +60,9 @@ async function downloadMaven(
       );
     }
 
-    const extractedPath = await tc.extractTar(downloadPath);
+    const extractedPath = await extractTar(downloadPath);
     let toolRoot = path.join(extractedPath, toolDirectoryName);
-    return await tc.cacheDir(toolRoot, 'maven', version);
+    return await cacheDir(toolRoot, 'maven', version);
   } catch (err) {
     throw err;
   }
