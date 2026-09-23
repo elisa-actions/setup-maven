@@ -14,7 +14,7 @@
     "maven",
     "setup"
   ],
-  "author": "stCarolas",
+  "author": "elisasre",
   "license": "MIT",
   "dependencies": {
     "@actions/core": "^3.0.1",
